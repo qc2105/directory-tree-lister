@@ -1,7 +1,7 @@
-import os
-import time
-import textwrap
 import collections
+import os
+import textwrap
+import time
 
 
 def recursive_scandir(path: str):
@@ -17,7 +17,7 @@ def recursive_scandir(path: str):
             yield from recursive_scandir(entry.path)
 
 
-def directory_tree_lister(directory: str) -> None:
+def list_directory_tree(directory: str) -> None:
     """
     Creates a recursive list of a directory with files sizes in a text file.
 
@@ -109,6 +109,5 @@ def directory_tree_lister(directory: str) -> None:
         print('', file=f)
 
 if __name__ == '__main__':
-    # directory = input('Input a directory for scanning: ')
-    # list_tree_maker(directory)
-    directory_tree_lister('/Users/robertcikorski/Movies')
+    dir = input('Input a directory for scanning: ')
+    list_directory_tree(dir)
