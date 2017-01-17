@@ -109,5 +109,5 @@ def list_directory_tree(directory: str) -> None:
         print('', file=f)
 
 if __name__ == '__main__':
-    dir = input('Input a directory for scanning: ')
-    list_directory_tree(dir)
+    input_dir = input('Input a directory for scanning: ')
+    list_directory_tree(input_dir)
