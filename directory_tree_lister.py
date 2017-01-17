@@ -24,7 +24,7 @@ def directory_tree_lister(directory: str) -> None:
     :param directory: a directory to be recursive listed
     :type directory: str
     """
-    output_file = os.path.dirname(os.path.abspath(__file__)) + '/output.txt'
+    output_file = '{path}/{file}'.format(path=os.path.dirname(os.path.abspath(__file__)), file='output.txt')
     f = open(output_file, 'w', encoding='utf-8')
 
     # Header
