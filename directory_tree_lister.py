@@ -36,7 +36,7 @@ def format_file_size(file_size: float) -> tuple:
     if sys.platform.startswith('win32'):
         b = Bytes(byte=1, kilobyte=1024, megabyte=1048576, gigabyte=1073741824, terabyte=1099511627776)
     else:
-        b = Bytes(byte=1, kilobyte=1000, megabyte=1000000, gigabyte=1000000000, terabyte=1000000000000000)
+        b = Bytes(byte=1, kilobyte=1000, megabyte=1000000, gigabyte=1000000000, terabyte=1000000000000)
 
     if file_size < b.kilobyte:
         file_size = round(file_size, 2)
