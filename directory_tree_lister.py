@@ -238,7 +238,7 @@ def main():
         output_type = input(textwrap.dedent('''
             Select out type:
             1) Text - .txt
-            2) Excel - xlsx
+            2) Excel - .xlsx
             '''))
 
         if output_type == '1':
