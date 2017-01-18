@@ -224,15 +224,15 @@ def list_directory_tree_excel(directory: str) -> None:
     workbook.close()
 
 
-if __name__ == '__main__':
+def main():
     input_directory = input('Input a directory for scanning: ')
 
     while True:
         output_type = input(textwrap.dedent('''
-        Select out type:
-        1) Text - .txt
-        2) Excel - xlsx
-        '''))
+            Select out type:
+            1) Text - .txt
+            2) Excel - xlsx
+            '''))
 
         if output_type == '1':
             list_directory_tree_text(input_directory)
@@ -241,3 +241,6 @@ if __name__ == '__main__':
         elif output_type == '2':
             list_directory_tree_excel(input_directory)
             break
+
+if __name__ == '__main__':
+    main()
