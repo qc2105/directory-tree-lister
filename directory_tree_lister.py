@@ -1,5 +1,6 @@
 import collections
 import os
+import sys
 import textwrap
 import time
 
@@ -28,24 +29,30 @@ def format_file_size(file_size: float) -> tuple:
     :return: file size formatted to 2 decimals and the corresponding data unit
     :rtype: tuple(float, str)
     """
-    Bytes = collections.namedtuple('Bytes', ['kilobyte', 'megabyte', 'gigabyte', 'terabyte'])
-    b = Bytes(kilobyte=1000, megabyte=1000000, gigabyte=1000000000, terabyte=1000000000000000)
+    Bytes = collections.namedtuple('Bytes', ['byte', 'kilobyte', 'megabyte', 'gigabyte', 'terabyte'])
+    u = Bytes(byte='B', kilobyte='KB', megabyte='MB', gigabyte='GB', terabyte='TB')
+
+    # Windows shows KB as 1024, while Ubuntu and MacOS show KB as 1000
+    if sys.platform.startswith('win32'):
+        b = Bytes(byte=1, kilobyte=1024, megabyte=1048576, gigabyte=1073741824, terabyte=1099511627776)
+    else:
+        b = Bytes(byte=1, kilobyte=1000, megabyte=1000000, gigabyte=1000000000, terabyte=1000000000000000)
 
     if file_size < b.kilobyte:
         file_size = round(file_size, 2)
-        unit = 'B'
+        unit = u.byte
     elif b.kilobyte <= file_size < b.megabyte:
         file_size = round(file_size / b.kilobyte, 2)
-        unit = 'KB'
+        unit = u.kilobyte
     elif b.megabyte <= file_size < b.gigabyte:
         file_size = round(file_size / b.megabyte, 2)
-        unit = 'MB'
+        unit = u.megabyte
     elif b.gigabyte <= file_size < b.terabyte:
         file_size = round(file_size / b.gigabyte, 2)
-        unit = 'GB'
+        unit = u.gigabyte
     else:
         file_size = round(file_size / b.terabyte, 2)
-        unit = 'TB'
+        unit = u.terabyte
     return file_size, unit
 
 
