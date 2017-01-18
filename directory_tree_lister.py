@@ -78,9 +78,9 @@ def list_directory_tree_text(directory: str) -> None:
         time.strftime("%d/%m/%Y"), time.strftime('%H:%M:%S')), type='Type', title='Title',
                 size='File Size'), file=f)
 
+    # Walk the directory tree
     directory_tree = recursive_scandir(directory)
 
-    # Walk the directory tree
     for entry in directory_tree:
         if entry.is_dir(follow_symlinks=False):
             print('{styling}\n{current_dir}\n{styling}'.format(styling='=' * len(entry.path), current_dir=entry.path),
@@ -172,9 +172,9 @@ def list_directory_tree_excel(directory: str) -> None:
     worksheet.write(row, col + 3, 'Size Unit')
     row += 1
 
+    # Walk the directory tree
     directory_tree = recursive_scandir(directory)
 
-    # Walk the directory tree
     for entry in directory_tree:
         if entry.is_dir(follow_symlinks=False):
             row += 1
