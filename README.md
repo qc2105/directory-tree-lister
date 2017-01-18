@@ -4,7 +4,7 @@ Creates a recursive list of a directory and outputs to either an excel file and 
 
 ### Using the functions
 
-`list_directory_tree_text(directory: str)`
+`list_directory_tree_text(directory: str)`<br>
 `list_directory_tree_excel(directory: str)`
 
 * For example:<br>
