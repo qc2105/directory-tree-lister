@@ -231,7 +231,10 @@ def list_directory_tree_excel(directory: str) -> None:
     workbook.close()
 
 
-def main():
+def main() -> None:
+    """
+    Asks user for directory and output type, and executes function to create a Directory Tree of the inputted directory.
+    """
     input_directory = input('Input a directory for scanning: ')
 
     while True:
@@ -243,10 +246,11 @@ def main():
 
         if output_type == '1':
             list_directory_tree_text(input_directory)
-            print('')
+            print('Directory Tree created in text file: directory-tree-{}.txt'.format(input_directory.split('/')[-1]))
             break
         elif output_type == '2':
             list_directory_tree_excel(input_directory)
+            print('Directory Tree created in excel file: directory-tree-{}.xlsx'.format(input_directory.split('/')[-1]))
             break
 
 if __name__ == '__main__':
