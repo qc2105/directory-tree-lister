@@ -119,7 +119,7 @@ def list_directory_tree_text(directory: str) -> None:
                             files += ['{type:<15}{title:<120}{size:8.2f}{byte:>3}'.format(
                                 type='File', title=entity, size=file_size, byte=unit)]
 
-                # Print to document
+                # Write to document
                 directories.sort()
                 for directory in directories:
                     print(directory, file=f)
@@ -214,7 +214,7 @@ def list_directory_tree_excel(directory: str) -> None:
 
                             files += ((entity, file_size, unit),)
 
-                # Print to document
+                # Write to document
                 directories.sort()
                 for directory in directories:
                     worksheet.write(row, col, 'Directory')
