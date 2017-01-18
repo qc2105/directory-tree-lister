@@ -9,7 +9,7 @@ def recursive_scandir(path: str):
     Generator for recursive os.scandir.
 
     :param path: path a recursively scan
-    :type path: st
+    :type path: str
     """
     for entry in os.scandir(path):
         if entry.is_dir(follow_symlinks=False):
@@ -19,7 +19,7 @@ def recursive_scandir(path: str):
 
 def list_directory_tree(directory: str) -> None:
     """
-    Creates a recursive list of a directory with files sizes in a text file.
+    Writes a recursive list of a directory with files sizes in a text file.
 
     :param directory: a directory to be recursive listed
     :type directory: str
