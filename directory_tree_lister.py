@@ -29,30 +29,29 @@ def format_file_size(file_size: float) -> tuple:
     :return: file size formatted to 2 decimals and the corresponding data unit
     :rtype: tuple(float, str)
     """
-    Bytes = collections.namedtuple('Bytes', ['byte', 'kilobyte', 'megabyte', 'gigabyte', 'terabyte'])
-    u = Bytes(byte='B', kilobyte='KB', megabyte='MB', gigabyte='GB', terabyte='TB')
+    Bytes = collections.namedtuple('Bytes', ['kilobyte', 'megabyte', 'gigabyte', 'terabyte'])
 
     # Windows shows KB as 1024, while Ubuntu and MacOS show KB as 1000
     if sys.platform.startswith('win32'):
-        b = Bytes(byte=1, kilobyte=1024, megabyte=1048576, gigabyte=1073741824, terabyte=1099511627776)
+        b = Bytes(kilobyte=1024, megabyte=1048576, gigabyte=1073741824, terabyte=1099511627776)
     else:
-        b = Bytes(byte=1, kilobyte=1000, megabyte=1000000, gigabyte=1000000000, terabyte=1000000000000)
+        b = Bytes(kilobyte=1000, megabyte=1000000, gigabyte=1000000000, terabyte=1000000000000)
 
     if file_size < b.kilobyte:
         file_size = round(file_size, 2)
-        unit = u.byte
+        unit = 'B'
     elif b.kilobyte <= file_size < b.megabyte:
         file_size = round(file_size / b.kilobyte, 2)
-        unit = u.kilobyte
+        unit = 'KB'
     elif b.megabyte <= file_size < b.gigabyte:
         file_size = round(file_size / b.megabyte, 2)
-        unit = u.megabyte
+        unit = 'MB'
     elif b.gigabyte <= file_size < b.terabyte:
         file_size = round(file_size / b.gigabyte, 2)
-        unit = u.gigabyte
+        unit = 'GB'
     else:
         file_size = round(file_size / b.terabyte, 2)
-        unit = u.terabyte
+        unit = 'TB'
     return file_size, unit
 
 
@@ -109,15 +108,19 @@ def list_directory_tree_text(directory: str) -> None:
 
                     # Entity is a Directory
                     if os.path.isdir(entity_path):
-                        directories += ['{type:<15}{title:<120}'.format(type='Directory', title=entity)]
+                        directories.append(
+                            ('{type:<15}{title:<120}'.format(type='Directory', title=entity)),
+                        )
                     # Entity is a File
                     else:
                         if entity[0] != '.':
                             file_size = os.stat(entity_path).st_size
 
                             file_size, unit = format_file_size(file_size)
-                            files += ['{type:<15}{title:<120}{size:8.2f}{byte:>3}'.format(
-                                type='File', title=entity, size=file_size, byte=unit)]
+                            files.append(
+                                ('{type:<15}{title:<120}{size:8.2f}{byte:>3}'.format(
+                                    type='File', title=entity, size=file_size, byte=unit)),
+                            )
 
                 # Write to document
                 directories.sort()
@@ -205,14 +208,16 @@ def list_directory_tree_excel(directory: str) -> None:
 
                     # Entity is a Directory
                     if os.path.isdir(entity_path):
-                        directories += (entity,)
+                        directories.append(entity)
                     # Entity is a File
                     else:
                         if entity[0] != '.':
                             file_size = os.stat(entity_path).st_size
                             file_size, unit = format_file_size(file_size)
 
-                            files += ((entity, file_size, unit),)
+                            files.append(
+                                (entity, file_size, unit),
+                            )
 
                 # Write to document
                 directories.sort()
