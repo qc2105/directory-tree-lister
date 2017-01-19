@@ -8,9 +8,8 @@ import directory_tree_lister
 
 class Application(tk.Frame):
     """
-    Class for Directory Tree Lister GUI methods.
+    Class consisting of Directory Tree Lister GUI methods.
     """
-
     def __init__(self, master=None) -> None:
         super().__init__(master)
         self.pack()
@@ -36,11 +35,11 @@ class Application(tk.Frame):
         self.quit_btn = tk.Button(self, text="Quit", command=root.destroy)
         self.quit_btn.pack()
 
-        # Selected directory Label
+        # Selected directory label
         self.selected_dir_label = tk.Label(self.master, text='', justify='left', wraplength=375)
         self.selected_dir_label.pack()
 
-        # Output Label
+        # Output label
         self.output_label = tk.Label(self.master, text='', justify='left', wraplength=375)
         self.output_label.pack()
 
@@ -48,7 +47,7 @@ class Application(tk.Frame):
         """
         Creates a file dialog and enables and loads methods into Make List buttons.
         """
-        # Ask directory
+        # Ask user for directory
         self.dirname = tk.filedialog.askdirectory(initialdir='.')
 
         if self.dirname:
@@ -74,7 +73,6 @@ class Application(tk.Frame):
             path=os.path.dirname(os.path.abspath(__file__)),
             file='directory-tree-{}.xlsx'.format(file_name)
         )
-
         # Outputs message of file created to GUI
         self.output_label.config(text='Created excel file:\n{}'.format(output_file_location))
 
@@ -93,13 +91,12 @@ class Application(tk.Frame):
             path=os.path.dirname(os.path.abspath(__file__)),
             file='directory-tree-{}.txt'.format(file_name)
         )
-
         # Outputs message of file created to GUI
         self.output_label.config(text='Created text file:\n{}'.format(output_file_location))
 
 
 if __name__ == '__main__':
-    # create the application
+    # Create the application
     root = tk.Tk()
     app = Application(master=root)
 
@@ -109,5 +106,5 @@ if __name__ == '__main__':
     app.master.maxsize(400, 250)
     app.master.resizable(False, False)
 
-    # start the program
+    # Start the program
     app.mainloop()
