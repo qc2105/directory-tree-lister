@@ -62,9 +62,18 @@ def list_directory_tree_text(directory: str) -> None:
     :param directory: a directory to be recursive listed
     :type directory: str
     """
-    file_name = directory.split('/')[-1]
-    output_file = '{path}/{file}'.format(path=os.path.dirname(os.path.abspath(__file__)),
-                                         file='directory-tree-{}.txt'.format(file_name))
+    if sys.platform.startswith('win32'):
+        file_name = directory.split('\\')[-1]
+        output_file = r'{path}\{file}'.format(
+            path=os.path.dirname(os.path.abspath(__file__)),
+            file='directory-tree-{}.txt'.format(file_name)
+        )
+    else:
+        file_name = directory.split('/')[-1]
+        output_file = '{path}/{file}'.format(
+            path=os.path.dirname(os.path.abspath(__file__)),
+            file='directory-tree-{}.txt'.format(file_name)
+        )
     f = open(output_file, 'w', encoding='utf-8')
 
     # Header
@@ -80,9 +89,13 @@ def list_directory_tree_text(directory: str) -> None:
     (Email)
     {style}
     {type:<15}{title:<120}{size:>11}
-    ''').format(style='=' * (len(directory) + 11), directory=directory, time='{} {}'.format(
-        time.strftime("%d/%m/%Y"), time.strftime('%H:%M:%S')), type='Type', title='Title',
-                size='File Size'), file=f)
+    ''').format(
+        style='=' * (len(directory) + 11),
+        directory=directory,
+        time='{} {}'.format(time.strftime("%d/%m/%Y"), time.strftime('%H:%M:%S')),
+        type='Type', title='Title',
+        size='File Size'
+    ), file=f)
 
     # Walk the directory tree
     directory_tree = recursive_scandir(directory)
@@ -104,7 +117,10 @@ def list_directory_tree_text(directory: str) -> None:
                 files = []
 
                 for entity in entities:
-                    entity_path = os.path.join('{path}/{entity}'.format(path=entry.path, entity=entity))
+                    if sys.platform.startswith('win32'):
+                        entity_path = os.path.join(r'{path}\{entity}'.format(path=entry.path, entity=entity))
+                    else:
+                        entity_path = os.path.join('{path}/{entity}'.format(path=entry.path, entity=entity))
 
                     # Entity is a Directory
                     if os.path.isdir(entity_path):
@@ -142,7 +158,10 @@ def list_directory_tree_excel(directory: str) -> None:
     :type directory: str
     """
     # Create a workbook and add a worksheet.
-    file_name = directory.split('/')[-1]
+    if sys.platform.startswith('win32'):
+        file_name = directory.split('\\')[-1]
+    else:
+        file_name = directory.split('/')[-1]
     workbook = xlsxwriter.Workbook('directory-tree-{}.xlsx'.format(file_name))
     worksheet = workbook.add_worksheet()
     time_created = '{} {}'.format(time.strftime("%d/%m/%Y"), time.strftime('%H:%M:%S'))
@@ -204,7 +223,10 @@ def list_directory_tree_excel(directory: str) -> None:
                 files = []
 
                 for entity in entities:
-                    entity_path = os.path.join('{path}/{entity}'.format(path=entry.path, entity=entity))
+                    if sys.platform.startswith('win32'):
+                        entity_path = os.path.join(r'{path}\{entity}'.format(path=entry.path, entity=entity))
+                    else:
+                        entity_path = os.path.join('{path}/{entity}'.format(path=entry.path, entity=entity))
 
                     # Entity is a Directory
                     if os.path.isdir(entity_path):
@@ -240,7 +262,11 @@ def main() -> None:
     """
     Asks user for directory and output type, and executes function to create a Directory Tree of the inputted directory.
     """
-    input_directory = input('Input a directory for scanning: ')
+    directory = input('Input a directory for scanning: ')
+    if sys.platform.startswith('win32'):
+        file_name = directory.split('\\')[-1]
+    else:
+        file_name = directory.split('/')[-1]
 
     while True:
         output_type = input(textwrap.dedent('''
@@ -250,13 +276,14 @@ def main() -> None:
             '''))
 
         if output_type == '1':
-            list_directory_tree_text(input_directory)
-            print('Directory Tree created in text file: directory-tree-{}.txt'.format(input_directory.split('/')[-1]))
+            list_directory_tree_text(directory)
+            print('Directory Tree created in text file: directory-tree-{}.txt'.format(file_name))
             break
         elif output_type == '2':
-            list_directory_tree_excel(input_directory)
-            print('Directory Tree created in excel file: directory-tree-{}.xlsx'.format(input_directory.split('/')[-1]))
+            list_directory_tree_excel(directory)
+            print('Directory Tree created in excel file: directory-tree-{}.xlsx'.format(file_name))
             break
+
 
 if __name__ == '__main__':
     main()

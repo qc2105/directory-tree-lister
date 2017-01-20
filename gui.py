@@ -80,7 +80,7 @@ class Application(tk.Frame):
         """
         Creates a txt file of a Directory Tree, and outputs message to 'output' Label.
 
-        :param directory: a directory string
+        :param directory: a valid directory
         :type directory: str
         """
         directory_tree_lister.list_directory_tree_text(directory)
