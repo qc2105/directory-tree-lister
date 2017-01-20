@@ -263,6 +263,9 @@ def main() -> None:
     Asks user for directory and output type, and executes function to create a Directory Tree of the inputted directory.
     """
     directory = input('Input a directory for scanning: ')
+    if directory[-1:] == '\\' or directory[-1:] == '/':
+        directory = directory[:-1]
+
     if sys.platform.startswith('win32'):
         file_name = directory.split('\\')[-1]
     else:
