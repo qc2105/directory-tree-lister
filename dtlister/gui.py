@@ -1,3 +1,4 @@
+import sys
 import tkinter as tk
 from functools import partial
 from tkinter import filedialog
@@ -96,12 +97,18 @@ class Application(tk.Frame):
         """
         core.list_directory_tree_text(directory, output_dir)
 
-        file_name = directory.split('/')[-1]
-
-        output_file_location = '{path}/{file}'.format(
-            path=output_dir,
-            file='directory-tree-{}.txt'.format(file_name)
-        )
+        if sys.platform.startswith('win32'):
+            file_name = directory.split('\\')[-1]
+            output_file_location = r'{output_dir}\{file}'.format(
+                output_dir=output_dir,
+                file='directory-tree-{}.txt'.format(file_name)
+            )
+        else:
+            file_name = directory.split('/')[-1]
+            output_file_location = '{output_dir}/{file}'.format(
+                output_dir=output_dir,
+                file='directory-tree-{}.txt'.format(file_name)
+            )
         # Outputs message of file created to GUI
         self.output_label.config(text='Created text file:\n{}'.format(output_file_location))
 
@@ -116,12 +123,18 @@ class Application(tk.Frame):
         """
         core.list_directory_tree_excel(directory, output_dir)
 
-        file_name = directory.split('/')[-1]
-
-        output_file_location = '{path}/{file}'.format(
-            path=output_dir,
-            file='directory-tree-{}.xlsx'.format(file_name)
-        )
+        if sys.platform.startswith('win32'):
+            file_name = directory.split('\\')[-1]
+            output_file_location = r'{output_dir}\{file}'.format(
+                output_dir=output_dir,
+                file='directory-tree-{}.xlsx'.format(file_name)
+            )
+        else:
+            file_name = directory.split('/')[-1]
+            output_file_location = '{output_dir}/{file}'.format(
+                output_dir=output_dir,
+                file='directory-tree-{}.xlsx'.format(file_name)
+            )
         # Outputs message of file created to GUI
         self.output_label.config(text='Created excel file:\n{}'.format(output_file_location))
 
