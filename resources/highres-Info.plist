@@ -5,7 +5,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>English</string>
 	<key>CFBundleExecutable</key>
-	<string>Sandwich</string>
+	<string>Directory Tree Lister 0.9</string>
 	<key>CFBundleIconFile</key>
 	<string>icon.icns</string>
 	<key>NSHighResolutionCapable</key>
