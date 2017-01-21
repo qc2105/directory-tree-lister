@@ -2,7 +2,7 @@ import tkinter as tk
 from functools import partial
 from tkinter import filedialog
 
-from directory_tree_lister import core
+from dtlister import core
 
 
 class Application(tk.Frame):

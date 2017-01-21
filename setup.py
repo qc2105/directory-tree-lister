@@ -11,7 +11,7 @@ buildOptions = dict(
 base = 'Win32GUI' if sys.platform == 'win32' else None
 
 executables = [
-    Executable('directory_tree_lister/__init__.py', base=base, targetName='Directory Tree Lister')
+    Executable('dtlister/__init__.py', base=base, targetName='Directory Tree Lister')
 ]
 
 setup(
