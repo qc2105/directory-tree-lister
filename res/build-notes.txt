@@ -1,0 +1,3 @@
+# Notes for building on MacOS Sierra:
+
+python3 setup.py bdist_mac --custom-info-plist res/highres-Info.plist

@@ -55,25 +55,21 @@ def format_file_size(file_size: float) -> tuple:
     return file_size, unit
 
 
-def list_directory_tree_text(directory: str) -> None:
+def list_directory_tree_text(directory: str, output_dir: str) -> None:
     """
     Writes a recursive list of a directory with files sizes in a text file.
 
-    :param directory: a directory to be recursive listed
+    :param directory: directory to be recursive listed
     :type directory: str
+    :param output_dir: directory which outputted text file will be saved
+    :type output_dir: str
     """
     if sys.platform.startswith('win32'):
         file_name = directory.split('\\')[-1]
-        output_file = r'{path}\{file}'.format(
-            path=os.path.dirname(os.path.abspath(__file__)),
-            file='directory-tree-{}.txt'.format(file_name)
-        )
+        output_file = r'{path}\{file}'.format(path=output_dir, file='directory-tree-{}.txt'.format(file_name))
     else:
         file_name = directory.split('/')[-1]
-        output_file = '{path}/{file}'.format(
-            path=os.path.dirname(os.path.abspath(__file__)),
-            file='directory-tree-{}.txt'.format(file_name)
-        )
+        output_file = '{path}/{file}'.format(path=output_dir, file='directory-tree-{}.txt'.format(file_name))
     f = open(output_file, 'w', encoding='utf-8')
 
     # Header
@@ -83,7 +79,7 @@ def list_directory_tree_text(directory: str) -> None:
     Creation Time: {time}
     {style}
     Directory Tree Lister
-    Version 1.0 - January 2017
+    Version 0.9 - January 2017
     Created by spottywolf
     (Website)
     (Email)
@@ -150,19 +146,23 @@ def list_directory_tree_text(directory: str) -> None:
         print('', file=f)
 
 
-def list_directory_tree_excel(directory: str) -> None:
+def list_directory_tree_excel(directory: str, output_dir: str) -> None:
     """
     Writes a recursive list of a directory with files sizes in an xlsx file.
 
-    :param directory: a directory to be recursive listed
+    :param directory: directory to be recursive listed
     :type directory: str
+    :param output_dir: directory which outputted text file will be saved
+    :type output_dir: str
     """
     # Create a workbook and add a worksheet.
     if sys.platform.startswith('win32'):
         file_name = directory.split('\\')[-1]
+        output_file = r'{path}\{file}'.format(path=output_dir, file='directory-tree-{}.xlsx'.format(file_name))
     else:
         file_name = directory.split('/')[-1]
-    workbook = xlsxwriter.Workbook('directory-tree-{}.xlsx'.format(file_name))
+        output_file = '{path}/{file}'.format(path=output_dir, file='directory-tree-{}.xlsx'.format(file_name))
+    workbook = xlsxwriter.Workbook(output_file)
     worksheet = workbook.add_worksheet()
     time_created = '{} {}'.format(time.strftime("%d/%m/%Y"), time.strftime('%H:%M:%S'))
 
@@ -172,7 +172,7 @@ def list_directory_tree_excel(directory: str) -> None:
     # Head and Header
     head = (
         'Directory Tree Lister',
-        'Version 1.0 - January 2017',
+        'Version 0.9 - January 2017',
         'Created by spottywolf',
         '(Website)',
         '(Email)',
@@ -271,6 +271,8 @@ def main() -> None:
     else:
         file_name = directory.split('/')[-1]
 
+    output_dir = input('Input a directory for output file: ')
+
     while True:
         output_type = input(textwrap.dedent('''
             Select out type:
@@ -279,12 +281,12 @@ def main() -> None:
             '''))
 
         if output_type == '1':
-            list_directory_tree_text(directory)
-            print('Directory Tree created in text file: directory-tree-{}.txt'.format(file_name))
+            list_directory_tree_text(directory, output_dir)
+            print('Directory Tree created in text file: directory-tree-{}.txt\nIn: {}'.format(file_name, output_dir))
             break
         elif output_type == '2':
-            list_directory_tree_excel(directory)
-            print('Directory Tree created in excel file: directory-tree-{}.xlsx'.format(file_name))
+            list_directory_tree_excel(directory, output_dir)
+            print('Directory Tree created in excel file: directory-tree-{}.xlsx\nIn: {}'.format(file_name, output_dir))
             break
 
 
