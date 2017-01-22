@@ -1,16 +1,14 @@
 import sys
-import tkinter as tk
 from functools import partial
-from tkinter import filedialog
+from tkinter import Tk, ttk, filedialog
 
 from dtlister import core
 
 
-class Application(tk.Frame):
+class DirectoryTreeListerApp(ttk.Frame):
     """
     Class consisting of Directory Tree Lister GUI methods.
     """
-
     def __init__(self, master=None) -> None:
         super().__init__(master)
         self.pack()
@@ -20,45 +18,56 @@ class Application(tk.Frame):
         """
         Creates Buttons and Labels.
         """
+        self.grid(row=0, column=0, padx=15, pady=10, sticky='NSEW')
+        self.columnconfigure(0, weight=1)
+        self.rowconfigure(0, weight=1)
+
         # Choose a directory button
-        self.ask_dir_btn = tk.Button(self, text='Choose a directory to scan', command=self.ask_directory)
-        self.ask_dir_btn.pack()
+        self.ask_dir_btn = ttk.Button(self, text='Choose a directory to scan...', command=self.ask_directory, width=25)
+        self.ask_dir_btn.grid(row=1, pady=2)
 
         # Choose a output directory button
-        self.ask_output_dir_btn = tk.Button(self, text='Choose an output directory', command=self.ask_output_directory,
-                                            state='disabled')
-        self.ask_output_dir_btn.pack()
+        self.ask_output_dir_btn = ttk.Button(self, text='Choose an output directory...',
+                                             command=self.ask_output_directory,
+                                             state='disabled', width=25)
+        self.ask_output_dir_btn.grid(row=2, pady=2)
+
+        self.sep_1 = ttk.Separator(self)
+        self.sep_1.grid(row=3, pady=5, sticky='EW')
 
         # Text button
-        self.make_list_text_btn = tk.Button(self, text="Create Text File Directory Tree", state='disabled')
-        self.make_list_text_btn.pack()
+        self.make_list_text_btn = ttk.Button(self, text="Create Text File Directory Tree", state='disabled', width=25)
+        self.make_list_text_btn.grid(row=4, pady=2)
 
         # Excel button
-        self.make_list_excel_btn = tk.Button(self, text="Create Excel File Directory Tree", state='disabled')
-        self.make_list_excel_btn.pack()
+        self.make_list_excel_btn = ttk.Button(self, text="Create Excel File Directory Tree", state='disabled', width=25)
+        self.make_list_excel_btn.grid(row=5, pady=2)
+
+        self.sep_2 = ttk.Separator(self)
+        self.sep_2.grid(row=6, pady=5, sticky='EW')
 
         # Quit button
-        self.quit_btn = tk.Button(self, text="Quit", command=root.destroy)
-        self.quit_btn.pack()
+        self.quit_btn = ttk.Button(self, text="Quit", command=root.destroy, width=10)
+        self.quit_btn.grid(row=7, pady=2)
 
         # Selected directory label
-        self.selected_dir_label = tk.Label(self.master, text='', justify='left', wraplength=375)
-        self.selected_dir_label.pack()
+        self.selected_dir_label = ttk.Label(self, text='', justify='left', wraplength=250)
+        self.selected_dir_label.grid(row=8, pady=5)
 
         # Selected output directory label
-        self.selected_output_dir_label = tk.Label(self.master, text='', justify='left', wraplength=375)
-        self.selected_output_dir_label.pack()
+        self.selected_output_dir_label = ttk.Label(self, text='', justify='left', wraplength=250)
+        self.selected_output_dir_label.grid(row=9, pady=5)
 
         # Output label
-        self.output_label = tk.Label(self.master, text='', justify='left', wraplength=375)
-        self.output_label.pack()
+        self.output_label = ttk.Label(self, text='', justify='left', wraplength=250)
+        self.output_label.grid(row=10, pady=5)
 
     def ask_directory(self) -> None:
         """
         Creates a file dialog and outputs select directory value to label.
         """
         # Ask user for directory
-        self.dirname = tk.filedialog.askdirectory()
+        self.dirname = filedialog.askdirectory()
 
         if self.dirname:
             # Outputs message of selected directory to GUI
@@ -72,7 +81,7 @@ class Application(tk.Frame):
         Creates a file dialog and enables and loads methods into Make List buttons.
         """
         # Ask user for directory
-        self.output_dirname = tk.filedialog.askdirectory()
+        self.output_dirname = filedialog.askdirectory()
 
         if self.output_dirname:
             # Outputs message of selected directory to GUI
@@ -140,14 +149,15 @@ class Application(tk.Frame):
 
 
 # Create the application
-root = tk.Tk()
-app = Application(master=root)
+root = Tk()
+root.configure(bg='#E7E7E7')
+app = DirectoryTreeListerApp(master=root)
 
 # Title and sizing
-app.master.title('Directory Tree Lister')
-app.master.minsize(400, 300)
-app.master.maxsize(400, 300)
-app.master.resizable(False, False)
+app.master.title('Directory Tree Lister 0.9')
+app.master.minsize(290, 450)
+app.master.maxsize(290, 550)
+app.master.resizable(False, True)
 
 # Start the program
 app.mainloop()
