@@ -107,6 +107,8 @@ class DirectoryTreeListerApp(ttk.Frame):
         self.chosen_scan_dir = filedialog.askdirectory()
 
         if self.chosen_scan_dir:
+            if sys.platform.startswith('win32'):
+                self.chosen_scan_dir = self.chosen_scan_dir.replace('/', '\\')
             self.selected_dir_label.config(text='Scan Directory:\n{}'.format(self.chosen_scan_dir))
             self.ask_output_dir_btn.config(state='active')
 
@@ -117,6 +119,8 @@ class DirectoryTreeListerApp(ttk.Frame):
         self.chosen_output_dir = filedialog.askdirectory()
 
         if self.chosen_output_dir:
+            if sys.platform.startswith('win32'):
+                self.chosen_output_dir = self.chosen_output_dir.replace('/', '\\')
             self.selected_output_dir_label.config(text='Output Directory:\n{}'.format(self.chosen_output_dir))
             self.make_list_text_btn.config(state='active')
             self.make_list_excel_btn.config(state='active')

@@ -5,15 +5,17 @@ from cx_Freeze import setup, Executable
 # Dependencies are automatically detected, but it might need fine tuning.
 buildOptions = dict(packages=[], excludes=[])
 
-if sys.platform == 'win32':
+if sys.platform.startswith('win32'):
     base = 'Win32GUI'
     icon = 'resources/icon.ico'
+    executable = 'dtlister\\__init__.py'
 else:
     base = None
     icon = None
+    executable = 'dtlister/__init__.py'
 
 executables = [
-    Executable('dtlister/__init__.py', base=base, icon=icon, targetName='Directory Tree Lister')
+    Executable(executable, base=base, icon=icon)
 ]
 
 setup(

@@ -282,11 +282,13 @@ def main() -> None:
 
         if output_type == '1':
             list_directory_tree_text(directory, output_dir)
-            print('Directory Tree created in text file: directory-tree-{}.txt\nIn: {}'.format(file_name, output_dir))
+            print('Directory Tree created in text file: directory-tree-{}.txt\nIn Directory: {}'.format(file_name,
+                                                                                                        output_dir))
             break
         elif output_type == '2':
             list_directory_tree_excel(directory, output_dir)
-            print('Directory Tree created in excel file: directory-tree-{}.xlsx\nIn: {}'.format(file_name, output_dir))
+            print('Directory Tree created in excel file: directory-tree-{}.xlsx\nIn Directory: {}'.format(file_name,
+                                                                                                          output_dir))
             break
 
 
