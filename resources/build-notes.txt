@@ -1,3 +1,2 @@
 # Notes for building on MacOS Sierra:
-
-python3 setup.py bdist_mac --custom-info-plist res/highres-Info.plist
+python3 setup.py bdist_mac --custom-info-plist resources/Info.plist --iconfile resources/icon.icns
