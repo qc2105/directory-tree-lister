@@ -262,33 +262,48 @@ def main() -> None:
     """
     Asks user for directory and output type, and executes function to create a Directory Tree of the inputted directory.
     """
-    directory = input('Input a directory for scanning: ')
-    if directory[-1:] == '\\' or directory[-1:] == '/':
-        directory = directory[:-1]
+    # Directory for scan
+    while True:
+        directory = input('Input a directory for scanning: ').strip()
+        if directory[-1:] == '\\' or directory[-1:] == '/':
+            directory = directory[:-1]
+
+        if os.path.isdir(directory):
+            break
+        else:
+            print('Please input a valid directory.')
 
     if sys.platform.startswith('win32'):
         file_name = directory.split('\\')[-1]
     else:
         file_name = directory.split('/')[-1]
 
-    output_dir = input('Input a directory for output file: ')
+    # Directory for output
+    while True:
+        output_dir = input('Input a directory for output file: ').strip()
+        if os.path.isdir(directory):
+            break
+        else:
+            print('Please input a valid directory.')
 
+    # Output type
     while True:
         output_type = input(textwrap.dedent('''
-            Select out type:
+            Select output type:
             1) Text - .txt
             2) Excel - .xlsx
+
             '''))
 
         if output_type == '1':
             list_directory_tree_text(directory, output_dir)
-            print('Directory Tree created in text file: directory-tree-{}.txt\nIn Directory: {}'.format(file_name,
-                                                                                                        output_dir))
+            print('Directory Tree created in text file: directory-tree-{}.txt\nIn Directory: {}\n'.format(file_name,
+                                                                                                          output_dir))
             break
         elif output_type == '2':
             list_directory_tree_excel(directory, output_dir)
-            print('Directory Tree created in excel file: directory-tree-{}.xlsx\nIn Directory: {}'.format(file_name,
-                                                                                                          output_dir))
+            print('Directory Tree created in excel file: directory-tree-{}.xlsx\nIn Directory: {}\n'.format(file_name,
+                                                                                                            output_dir))
             break
 
 

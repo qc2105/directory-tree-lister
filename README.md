@@ -1,15 +1,39 @@
 # Directory Tree Lister
 
-Creates a recursive list of a directory and outputs to either an excel file and or a text file.
+Creates a recursive list of a directory and outputs to either an excel file and or a text file. Windows and MacOS/Linux 
+supported.
 
-### Using the functions
+## Usage
 
-`list_directory_tree_text(directory: str)`<br>
-`list_directory_tree_excel(directory: str)`
+### Using the core script
 
-* For example:<br>
-`list_directory_tree_text('/Users/smith/Documents')`<br>
-A name file named directory-tree-Documents.txt will be created in the directory the script was executed. 
+> dtlister/core.py
+
+```
+$ python dtlister/core.py  
+$ Input a directory for scanning: /Users/johnsmith/Movies
+$ Input a directory for output file: /Users/johnsmith/Documents
+
+$ Select output type:
+$ 1) Text - .txt
+$ 2) Excel - .xlsx
+
+$ 1
+
+$ Directory Tree created in text file: directory-tree-Movies.txt
+$ In Directory: /Users/johnsmith/Documents
+```
+
+### Notes about the GUI option
+
+The project builds successfully on MacOS 10.12.2, though it should build successfully on Windows as well. There are 
+some small notes regarding this in `resources/build-notes.txt`.
+
+
+### Building on MacOS via cx_freeze
+
+`python setup.py bdist_mac --custom-info-plist resources/Info.plist --iconfile resources/icon.icns`
+
 
 ## Authors
 
