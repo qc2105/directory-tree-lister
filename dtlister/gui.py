@@ -25,25 +25,32 @@ class DirectoryTreeListerApp(ttk.Frame):
         self.create_menubar()
         self.create_widgets()
 
-    def create_menubar(self):
+    def create_menubar(self) -> None:
         """
         Create menubar.
         """
         self.menubar = Menu(self.master)
 
-        # About menu dialog
-        self.about_menu = Menu(self.menubar, name='apple', tearoff=False)
-        self.menubar.add_cascade(menu=self.about_menu)
-        self.about_menu.add_cascade(label='About {app}'.format(app=self.app_name), command=self.open_about_dialog)
-        self.about_menu.add_separator()
-        self.master.configure(menu=self.menubar)
+        # MacOS - About menu dialog
+        if sys.platform.startswith('darwin'):
+            self.about_menu = Menu(self.menubar, name='apple', tearoff=False)
+            self.menubar.add_cascade(menu=self.about_menu)
+            self.about_menu.add_cascade(label='About {app}'.format(app=self.app_name), command=self.open_about_dialog)
+            self.about_menu.add_separator()
 
         # File menu
         self.file_menu = Menu(self.menubar, tearoff=False)
         self.menubar.add_cascade(label="File", menu=self.file_menu)
         self.file_menu.add_command(label="Quit", command=self.master.destroy)
 
-    def open_about_dialog(self):
+        # Non-MacOS - Help menu containing about menu dialog
+        if not sys.platform.startswith('darwin'):
+            self.help_menu = Menu(self.menubar, tearoff=False)
+            self.menubar.add_cascade(label='Help', menu=self.help_menu)
+            self.help_menu.add_command(label='About', command=self.open_about_dialog)
+        self.master.config(menu=self.menubar)
+
+    def open_about_dialog(self) -> None:
         """
         Opens 'About' dialog.
         """
@@ -166,7 +173,7 @@ class DirectoryTreeListerApp(ttk.Frame):
         self.output_label.config(text='Created Excel File:\n{}'.format(output_file_location))
 
 
-def main():
+def main() -> None:
     # Create and start the application
     root = Tk()
     app = DirectoryTreeListerApp(master=root)
