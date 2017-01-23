@@ -7,12 +7,12 @@ buildOptions = dict(packages=[], excludes=[])
 
 if sys.platform.startswith('win32'):
     executables = [
-        Executable('dtlister\\__init__.py', base='Win32GUI', icon='resources\\icon.ico',
+        Executable('dtlister\\__main__.py', base='Win32GUI', icon='resources\\icon.ico',
                    targetName='Directory Tree Lister')
     ]
 else:
     executables = [
-        Executable('dtlister/__init__.py', targetName='Directory Tree Lister')
+        Executable('dtlister/__main__.py', targetName='Directory Tree Lister')
     ]
 
 setup(

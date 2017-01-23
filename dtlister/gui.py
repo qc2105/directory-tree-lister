@@ -1,7 +1,7 @@
 import sys
 from tkinter import Tk, ttk, filedialog, Menu, messagebox
 
-import core
+from dtlister.core import list_directory_tree_text, list_directory_tree_excel
 
 
 class DirectoryTreeListerApp(ttk.Frame):
@@ -136,7 +136,7 @@ class DirectoryTreeListerApp(ttk.Frame):
         """
         Creates a txt file of a Directory Tree, and outputs message to GUI.
         """
-        core.list_directory_tree_text(self.chosen_scan_dir, self.chosen_output_dir)
+        list_directory_tree_text(self.chosen_scan_dir, self.chosen_output_dir)
 
         if sys.platform.startswith('win32'):
             file_name = self.chosen_scan_dir.split('\\')[-1]
@@ -156,7 +156,7 @@ class DirectoryTreeListerApp(ttk.Frame):
         """
         Creates a xlsx file of a Directory Tree, and outputs message to GUI.
         """
-        core.list_directory_tree_excel(self.chosen_scan_dir, self.chosen_output_dir)
+        list_directory_tree_excel(self.chosen_scan_dir, self.chosen_output_dir)
 
         if sys.platform.startswith('win32'):
             file_name = self.chosen_scan_dir.split('\\')[-1]
