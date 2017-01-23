@@ -1,7 +1,7 @@
 import sys
 from tkinter import Tk, ttk, filedialog, Menu, messagebox
 
-from dtlister import core
+import core
 
 
 class DirectoryTreeListerApp(ttk.Frame):

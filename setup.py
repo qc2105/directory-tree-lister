@@ -6,17 +6,14 @@ from cx_Freeze import setup, Executable
 buildOptions = dict(packages=[], excludes=[])
 
 if sys.platform.startswith('win32'):
-    base = 'Win32GUI'
-    icon = 'resources/icon.ico'
-    executable = 'dtlister\\__init__.py'
+    executables = [
+        Executable('dtlister\\__init__.py', base='Win32GUI', icon='resources\\icon.ico',
+                   targetName='Directory Tree Lister')
+    ]
 else:
-    base = None
-    icon = None
-    executable = 'dtlister/__init__.py'
-
-executables = [
-    Executable(executable, base=base, icon=icon)
-]
+    executables = [
+        Executable('dtlister/__init__.py', targetName='Directory Tree Lister')
+    ]
 
 setup(
     name='Directory Tree Lister',
