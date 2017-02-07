@@ -11,7 +11,7 @@ def recursive_scandir(path: str):
     """
     Generator for recursive os.scandir.
 
-    :param path: path a recursively scan
+    :param path: path to recursively scan
     :type path: str
     """
     for entry in os.scandir(path):
