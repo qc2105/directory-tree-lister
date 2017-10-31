@@ -29,18 +29,9 @@ $ In Directory: /Users/johnsmith/Documents
 The project builds successfully on MacOS 10.12.2, though it should build successfully on Windows as well. There are 
 some small notes regarding this in `resources/build-notes.txt`.
 
-
 ### Building on MacOS via cx_freeze
 
 `python setup.py bdist_mac --custom-info-plist resources/Info.plist --iconfile resources/icon.icns`
-
-
-## Authors
-
-* **spottywolf**
-
-See also the list of [contributors](https://github.com/spottywolf/mathfever/graphs/contributors) who participated in 
-this project.
 
 ## License
 
